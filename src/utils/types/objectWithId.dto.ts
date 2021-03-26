@@ -1,8 +1,8 @@
-import { IsNumber } from 'class-validator';
+import {IsNumber} from 'class-validator';
 
 class ObjectWithIdDto {
-  @IsNumber()
-  id: number;
+    @IsNumber()
+    id: number;
 }
 
 export default ObjectWithIdDto;

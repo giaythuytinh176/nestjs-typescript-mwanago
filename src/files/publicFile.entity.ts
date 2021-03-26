@@ -1,15 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
 class PublicFile {
-  @PrimaryGeneratedColumn()
-  public id: number;
+    @PrimaryGeneratedColumn()
+    public id: number;
 
-  @Column()
-  public url: string;
+    @Column()
+    public url: string;
 
-  @Column()
-  public key: string;
+    @Column()
+    public key: string;
 }
 
 export default PublicFile;

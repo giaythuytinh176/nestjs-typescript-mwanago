@@ -1,4 +1,4 @@
 export interface BookProperties {
-  authors: string[];
-  publicationYear: string;
+    authors: string[];
+    publicationYear: string;
 }

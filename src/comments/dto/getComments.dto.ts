@@ -1,10 +1,10 @@
-import { IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
+import {IsOptional} from 'class-validator';
+import {Type} from 'class-transformer';
 
 class GetCommentsDto {
-  @Type(() => Number)
-  @IsOptional()
-  postId?: number;
+    @Type(() => Number)
+    @IsOptional()
+    postId?: number;
 }
 
 export default GetCommentsDto

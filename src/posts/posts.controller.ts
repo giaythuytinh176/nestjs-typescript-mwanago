@@ -1,66 +1,67 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-  Req,
-  UseInterceptors,
-  ClassSerializerInterceptor,
-  Query, CacheKey, CacheTTL,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    UseGuards,
+    Req,
+    UseInterceptors,
+    ClassSerializerInterceptor,
+    Query, CacheKey, CacheTTL,
 } from '@nestjs/common';
 import PostsService from './posts.service';
 import CreatePostDto from './dto/createPost.dto';
 import UpdatePostDto from './dto/updatePost.dto';
 import FindOneParams from '../utils/findOneParams';
 import RequestWithUser from '../authentication/requestWithUser.interface';
-import { PaginationParams } from '../utils/types/paginationParams';
-import { HttpCacheInterceptor } from './httpCache.interceptor';
-import { GET_POSTS_CACHE_KEY } from './postsCacheKey.constant';
+import {PaginationParams} from '../utils/types/paginationParams';
+import {HttpCacheInterceptor} from './httpCache.interceptor';
+import {GET_POSTS_CACHE_KEY} from './postsCacheKey.constant';
 import JwtTwoFactorGuard from '../authentication/jwt-two-factor.guard';
 
 @Controller('posts')
 @UseInterceptors(ClassSerializerInterceptor)
 export default class PostsController {
-  constructor(
-    private readonly postsService: PostsService
-  ) {}
-
-  @UseInterceptors(HttpCacheInterceptor)
-  @CacheKey(GET_POSTS_CACHE_KEY)
-  @CacheTTL(120)
-  @Get()
-  async getPosts(
-    @Query('search') search: string,
-    @Query() { offset, limit, startId }: PaginationParams
-  ) {
-    if (search) {
-      return this.postsService.searchForPosts(search, offset, limit, startId);
+    constructor(
+        private readonly postsService: PostsService
+    ) {
     }
-    return this.postsService.getPostsWithAuthors(offset, limit, startId);
-  }
 
-  @Get(':id')
-  getPostById(@Param() { id }: FindOneParams) {
-    return this.postsService.getPostById(Number(id));
-  }
+    @UseInterceptors(HttpCacheInterceptor)
+    @CacheKey(GET_POSTS_CACHE_KEY)
+    @CacheTTL(120)
+    @Get()
+    async getPosts(
+        @Query('search') search: string,
+        @Query() {offset, limit, startId}: PaginationParams
+    ) {
+        if (search) {
+            return this.postsService.searchForPosts(search, offset, limit, startId);
+        }
+        return this.postsService.getPostsWithAuthors(offset, limit, startId);
+    }
 
-  @Post()
-  @UseGuards(JwtTwoFactorGuard)
-  async createPost(@Body() post: CreatePostDto, @Req() req: RequestWithUser) {
-    return this.postsService.createPost(post, req.user);
-  }
+    @Get(':id')
+    getPostById(@Param() {id}: FindOneParams) {
+        return this.postsService.getPostById(Number(id));
+    }
 
-  @Patch(':id')
-  async updatePost(@Param() { id }: FindOneParams, @Body() post: UpdatePostDto) {
-    return this.postsService.updatePost(Number(id), post);
-  }
+    @Post()
+    @UseGuards(JwtTwoFactorGuard)
+    async createPost(@Body() post: CreatePostDto, @Req() req: RequestWithUser) {
+        return this.postsService.createPost(post, req.user);
+    }
 
-  @Delete(':id')
-  async deletePost(@Param() { id }: FindOneParams) {
-    return this.postsService.deletePost(Number(id));
-  }
+    @Patch(':id')
+    async updatePost(@Param() {id}: FindOneParams, @Body() post: UpdatePostDto) {
+        return this.postsService.updatePost(Number(id), post);
+    }
+
+    @Delete(':id')
+    async deletePost(@Param() {id}: FindOneParams) {
+        return this.postsService.deletePost(Number(id));
+    }
 }

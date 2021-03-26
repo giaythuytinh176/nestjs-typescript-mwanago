@@ -1,14 +1,14 @@
 import PostSearchBody from './postSearchBody.interface';
 
 interface PostSearchResult {
-  hits: {
-    total: {
-      value: number;
+    hits: {
+        total: {
+            value: number;
+        };
+        hits: Array<{
+            _source: PostSearchBody;
+        }>;
     };
-    hits: Array<{
-      _source: PostSearchBody;
-    }>;
-  };
 }
 
 export default PostSearchResult
