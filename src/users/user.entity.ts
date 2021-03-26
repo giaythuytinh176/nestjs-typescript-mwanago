@@ -31,11 +31,11 @@ class User {
 
   @JoinColumn()
   @OneToOne(
-    () => PublicFile,
-    {
-      eager: true,
-      nullable: true
-    }
+      () => PublicFile,
+      {
+        eager: true,
+        nullable: true
+      }
   )
   public avatar?: PublicFile;
 
